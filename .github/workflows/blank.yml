@@ -1,4 +1,4 @@
-@echo off
+
 chcp 65001 >nul
 title PGR Windows - PC Virtual
 color 0A
