@@ -1,0 +1,163 @@
+@echo off
+chcp 65001 >nul
+title PGR Windows - PC Virtual
+color 0A
+setlocal enabledelayedexpansion
+
+REM ============================================================
+REM  PGR WINDOWS - PC VIRTUAL (script Batch para Windows)
+REM  Usuario: pgr   Senha: pgr
+REM  Especificacoes: 16 GB RAM / RTX 4000 / 1 TB SSD / Sessao infinita
+REM ============================================================
+
+REM ---------- TELA DE BOOT (BIOS) ----------
+:BOOT
+cls
+echo.
+echo        ██████╗  ██████╗  ██████╗
+echo        ██╔══██╗██╔════╝ ██╔═══██╗
+echo        ██████╔╝██║  ███╗██║   ██║
+echo        ██╔═══╝ ██║   ██║██║   ██║
+echo        ██║     ╚██████╔╝╚██████╔╝
+echo        ╚═╝      ╚═════╝  ╚═════╝
+echo.
+echo        PGR BIOS v2.4.1 - PC Virtual
+echo ============================================
+echo.
+echo  [OK] CPU: PGR Core i9-14900K @ 5.80 GHz
+ping -n 2 127.0.0.1 >nul
+echo  [OK] Memoria RAM: 16384 MB DDR5 testada
+ping -n 2 127.0.0.1 >nul
+echo  [OK] VGA: NVIDIA GeForce RTX 4000 (16 GB GDDR6)
+ping -n 2 127.0.0.1 >nul
+echo  [OK] Armazenamento: SSD NVMe 1 TB
+ping -n 2 127.0.0.1 >nul
+echo  [OK] Teclado ^& Mouse USB detectados
+ping -n 2 127.0.0.1 >nul
+echo.
+echo  Carregando PGR Windows 11 - Infinito Edition...
+ping -n 3 127.0.0.1 >nul
+echo  Sessao infinita ativada (sem bloqueio automatico).
+ping -n 2 127.0.0.1 >nul
+goto LOGIN
+
+REM ---------- TELA DE LOGIN ----------
+:LOGIN
+cls
+color 0B
+echo.
+echo ============================================
+echo          PGR WINDOWS - LOGIN
+echo ============================================
+echo.
+set /p "usuario=  Usuario: "
+REM Senha oculta usando PowerShell
+for /f "delims=" %%a in ('powershell -Command "$p=Read-Host '  Senha' -AsSecureString; [Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($p))"') do set "senha=%%a"
+
+if /i "!usuario!"=="pgr" if "!senha!"=="pgr" goto DESKTOP
+echo.
+echo  [ERRO] Usuario ou senha incorretos!
+echo  Dica: usuario = pgr   senha = pgr
+pause
+goto LOGIN
+
+REM ---------- AREA DE TRABALHO ----------
+:DESKTOP
+cls
+color 0F
+echo.
+echo ============================================
+echo   Bem-vindo, pgr!
+echo   PGR Windows 11 - Infinito Edition
+echo ============================================
+echo   CPU : PGR Core i9-14900K @ 5.80 GHz
+echo   RAM : 16 GB DDR5
+echo   GPU : NVIDIA GeForce RTX 4000
+echo   SSD : 1 TB NVMe
+echo   Sessao: INFINITA (sem timeout)
+echo ============================================
+echo   Digite 'help' para ver os comandos.
+echo.
+
+REM ---------- PROMPT DE COMANDOS ----------
+:PROMPT
+set "cmd="
+set /p "cmd=C:\Users\pgr^> "
+
+if /i "!cmd!"=="help"     goto CMD_HELP
+if /i "!cmd!"=="whoami"   echo   pgr & goto PROMPT
+if /i "!cmd!"=="ls"       goto CMD_LS
+if /i "!cmd!"=="dir"      goto CMD_LS
+if /i "!cmd!"=="neofetch" goto CMD_SYSINFO
+if /i "!cmd!"=="sysinfo"  goto CMD_SYSINFO
+if /i "!cmd!"=="ver"      echo   PGR Windows 11 [1.0.0] & goto PROMPT
+if /i "!cmd!"=="date"     echo   %date% & goto PROMPT
+if /i "!cmd!"=="time"     echo   %time% & goto PROMPT
+if /i "!cmd!"=="cls"      goto DESKTOP
+if /i "!cmd!"=="clear"    goto DESKTOP
+if /i "!cmd!"=="exit"     goto SHUTDOWN
+if /i "!cmd!"=="sair"     goto SHUTDOWN
+if /i "!cmd!"=="desligar" goto SHUTDOWN
+if /i "!cmd!"=="cat leia-me.txt"  type "%~dp0..\README.md" 2>nul & echo. & goto PROMPT
+if "!cmd!"=="" goto PROMPT
+
+echo   '!cmd!' nao e reconhecido como comando interno.
+echo   Digite 'help' para ver os comandos disponiveis.
+goto PROMPT
+
+:CMD_HELP
+echo.
+echo   Comandos disponiveis:
+echo     help      - mostra esta ajuda
+echo     whoami    - mostra o usuario atual
+echo     ls / dir  - lista arquivos
+echo     neofetch  - informacoes do sistema
+echo     ver       - versao do sistema
+echo     date/time - data e hora
+echo     cls/clear - limpa a tela
+echo     cat leia-me.txt - mostra o README
+echo     exit      - desligar o PC virtual
+echo.
+goto PROMPT
+
+:CMD_LS
+echo.
+echo    Diretorio de C:\Users\pgr\Documentos
+echo.
+echo    2026-11-01  00:42     leia-me.txt
+echo    2026-11-01  00:42     notas.txt
+echo    2026-11-01  00:42     projeto.c
+echo    2026-11-01  00:42     poema.txt
+echo.
+goto PROMPT
+
+:CMD_SYSINFO
+echo.
+echo         ______            pgr@PGR-PC
+echo        /  ____|           ------------------
+echo       ^|  /  __            OS:     PGR Windows 11 Infinito
+echo       ^| ^| ^|_ ^|            CPU:    PGR Core i9-14900K @ 5.80 GHz
+echo       ^|  \__^| ^|           RAM:    16 GB DDR5
+echo        \_____/            GPU:    NVIDIA GeForce RTX 4000
+echo                              SSD:    1 TB NVMe
+echo                              Shell:  pgrcmd 1.0
+echo                              Sessao: INFINITA
+echo.
+goto PROMPT
+
+REM ---------- DESLIGAR ----------
+:SHUTDOWN
+cls
+color 0C
+echo.
+echo ============================================
+echo   Desligando PGR Windows...
+echo   Salvando sessao (tempo infinito preservado).
+echo ============================================
+ping -n 3 127.0.0.1 >nul
+cls
+echo.
+echo   Agora voce pode desligar o PC com seguranca.
+echo.
+pause
+exit
